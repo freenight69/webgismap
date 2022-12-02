@@ -12,7 +12,9 @@ export default {
 </script>
 
 <style>
-html, body, #app {
+html,
+body,
+#app {
   position: relative;
   widows: 100%;
   height: 100%;
