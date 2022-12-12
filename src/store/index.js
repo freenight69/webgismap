@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 const state = {
  
-    _defaultView: '4444',       //默认地图view
+    _defaultView: '',       //默认地图view
 };
  
 const getters = {

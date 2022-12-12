@@ -14,32 +14,69 @@ export default {
     name: 'MapView',
     components: {},
     mounted: function () {
-        // console.log(this.$store.state._defaultView)
+        // console.log(this.$store.getters._defaultMapView)
         this._createMapView();
     },
     methods: {
         async _createMapView() {
-            const [Map, MapView] = await loadModules(
-                ['esri/Map', 'esri/views/MapView'],
+            const [Map, MapView, Basemap, TileLayer, BasemapToggle, ScaleBar] = await loadModules(
+                [
+                    'esri/Map', 
+                    'esri/views/MapView', 
+                    'esri/Basemap', 
+                    'esri/layers/TileLayer', 
+                    'esri/widgets/BasemapToggle', 
+                    'esri/widgets/ScaleBar'
+                ],
                 options
             );
 
-            const map = new Map({    // 实例化地图
-                basemap: 'osm',
+            // create a basemap from a dynamic mapserver
+            const basemap = new Basemap({
+            baseLayers: [
+                new TileLayer({
+                url: "https://map.geoq.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer",
+                title: "Basemap"
+                })
+            ],
+            title: "basemap",
+            id: "basemap"
             });
 
-            const view = new MapView({   // 实例化地图视图
+            const map = new Map({    // 实例化地图
+                basemap,
+            });
+
+            const mapView = new MapView({   // 实例化地图视图
                 container: 'mapview',
                 map: map,
                 zoom: 15,
-                center: [121.936125, 30.973266],
+                center: [121.938118,30.966362],
             });
 
-            view.ui.components = [];   // 清除掉地图左上角默认的缩放图标
+            // 实例化底图切换控件
+            const basemapToggle = new BasemapToggle({
+                view: mapView,  // The view that provides access to the map's "streets-vector" basemap
+                nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
+            });
+            // Add the widget to the top-right corner of the view
+            mapView.ui.add(basemapToggle, {
+                position: "bottom-right"
+            });
 
-            this.$store.commit('_setDefaultView', view)
+            // 实例化比例尺控件
+            const scaleBar = new ScaleBar({
+                view: mapView,
+                unit: 'metric'
+            });
+            // Add widget to the bottom left corner of the view
+            mapView.ui.add(scaleBar, {
+                position: "bottom-left"
+            });
 
-            console.log(view)
+            // mapView.ui.components = [];   // 清除掉地图左上角默认的缩放图标
+
+            this.$store.commit('_setDefaultView', mapView)
         }
     }
 }
