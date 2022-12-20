@@ -14,7 +14,7 @@ export default {
     name: 'MapView',
     components: {},
     mounted: function () {
-        // console.log(this.$store.getters._defaultMapView)
+        // console.log(this.$store.getters._defaultMapView);
         this._createMapView();
     },
     methods: {
@@ -76,7 +76,7 @@ export default {
 
             // mapView.ui.components = [];   // 清除掉地图左上角默认的缩放图标
 
-            this.$store.commit('_setDefaultView', mapView)
+            this.$store.commit('_setDefaultMapView', mapView)
         }
     }
 }

@@ -4,28 +4,32 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const state = {
- 
-    _defaultView: '',       //默认地图view
+    _defaultMapView: '',                 // 默认地图view
+    _defaultMapTreeVisible: false,       // 地图目录树显示/隐藏
 };
  
-const getters = {
- 
-    _getDefaultView() {
-        return state._defaultView;
+const getters = { 
+    _getDefaultMapView() {
+        return state._defaultMapView;
+    },
+    _getDefaultMapTreeVisible() {
+        return state._defaultMapTreeVisible;
     }
 };
  
-const mutations = {
- 
-    _setDefaultView(state, value) {
-        state._defaultView = value;
+const mutations = { 
+    _setDefaultMapView(state, value) {
+        state._defaultMapView = value;
+    },
+    _setDefaultMapTreeVisible(state, value) {
+        state._defaultMapTreeVisible = value;
     }
 };
  
-const store = new Vuex.Store(
+const store = new Vuex.Store({
     state,
     getters,
     mutations
-);
+});
  
 export default store;

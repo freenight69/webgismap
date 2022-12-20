@@ -7,7 +7,7 @@
       default-active="2"
       class="el-menu-vertical-demo"
       @select="handleMenuSelect"
-      unique-opened=true
+      :unique-opened="true"
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b">
@@ -52,16 +52,11 @@
 </template>
 
 <script>
-// import MapView from './components/common/MapView.vue'
 export default {
   name: 'App',
-  components: {
-    // MapView,
-  },
+  components: {},
   data() {
-    return {
-      isCollapse: true
-    };
+    return {};
   },
   methods: {
     handleMenuSelect(index) {
