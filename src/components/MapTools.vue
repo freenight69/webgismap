@@ -1,8 +1,8 @@
 <template>
     <div class="maptools-view">
       <el-button-group>
-        <el-button id="xzqh" type="info" class="maptools-item" size="medium" @click="handleMapToolsItemClick">行政区导航</el-button>
-        <el-button id="maptree" type="info" class="maptools-item" size="medium" @click="handleMapToolsItemClick">目录树管理</el-button>
+        <el-button id="xzqh" type="info" class="maptools-item" size="medium" @click="handleMapToolsItemClick">行政导航</el-button>
+        <el-button id="maptree" type="info" class="maptools-item" size="medium" @click="handleMapToolsItemClick">图层管理</el-button>
         <el-button id="distance" type="info" class="maptools-item" size="medium" @click="handleMapToolsItemClick">距离测量</el-button>
         <el-button id="area" type="info" class="maptools-item" size="medium" @click="handleMapToolsItemClick">面积测量</el-button>
         <el-button id="clear" type="info" class="maptools-item" size="medium" @click="handleMapToolsItemClick">清屏</el-button>
@@ -48,7 +48,7 @@
   <style>
   .maptools-view{
     position: absolute;
-    width: 490px;
+    width: 460px;
     height: 30px;
     top: 15px;
     right: 15px;

@@ -1,15 +1,18 @@
 <template>
     <div class="maptree-pannel" v-show="this.$store.getters._getDefaultMapTreeVisible">
+        <div class="maptree-header">
+            <span>图层管理</span>
+            <i class="el-icon-close" @click="closeMapTreePannel"></i>
+        </div>
         <el-tree 
         :data="data" 
-        node-key="id"
-        :default-expanded-keys="[1, 2]"
         :props="defaultProps" 
+        accordion 
         style="background-color: #E9E9EB" 
         @node-click="handleNodeClick">
       </el-tree>
     </div>
-  </template>
+</template>
   
 <script>
 import { loadModules } from 'esri-loader';
@@ -26,23 +29,19 @@ export default {
         return {
             data: [
                 {
-                    id: 1,
                     label: '底图图层',
                     children: [
                         {
-                            id: 4,
                             label: '暖色系图层',
                             layerid: 'layerid',
                             layerurl: 'http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetWarm/MapServer',
                         },
                         {
-                            id: 5,
                             label: '灰色系图层',
                             layerid: 'layerid',
                             layerurl: 'http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetGray/MapServer',
                         },
                         {
-                            id: 6,
                             label: '深色系图层',
                             layerid: 'layerid',
                             layerurl: 'https://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer',
@@ -51,29 +50,27 @@ export default {
                 },
 
                 {
-                    id: 2,
                     label: '行政区划数据',
                     children: [
                         {
                             label: '省数据',
                             layerid: 'layerid',
-                            layerurl: 'https://services3.arcgis.com/U26uBjSD32d7xvm2/arcgis/rest/services/XZQHProvince_WebMokatuo/FeatureServer',
+                            layerurl: 'https://services7.arcgis.com/rfJQF2MONqIFMBhn/arcgis/rest/services/China_Provinces_webMarcator/FeatureServer',
                         },
                         {
                             label: '市数据',
                             layerid: 'layerid',
-                            layerurl: 'https://services3.arcgis.com/U26uBjSD32d7xvm2/arcgis/rest/services/XZQHCity_WebMokatuo/FeatureServer',
+                            layerurl: 'https://services7.arcgis.com/rfJQF2MONqIFMBhn/arcgis/rest/services/China_Cities_webMarcator/FeatureServer',
                         },
                         {
                             label: '县数据',
                             layerid: 'layerid',
-                            layerurl: 'https://services3.arcgis.com/U26uBjSD32d7xvm2/arcgis/rest/services/XZQHCounty_WebMokatuo/FeatureServer',
+                            layerurl: 'https://services7.arcgis.com/rfJQF2MONqIFMBhn/arcgis/rest/services/China_Counties_webMarcator/FeatureServer',
                         },
                     ],
                 },
                 {
-                    id: 3,
-                    label: '业务数据',
+                    label: '地块数据',
                     children: [
                         {
                             label: '火车站数据 84',
@@ -109,23 +106,38 @@ export default {
         async handleNodeClick(data) {
           console.log(data.layerurl);
           if(data.layerurl) {
+            //删除已添加的图层
             const view = this.$store.getters._getDefaultMapView;
-            const resultLayer = view.map.findLayerById('layerid');
-            if (resultLayer) view.map.remove(resultLayer);
+                const resultLayer = view.map.findLayerById('layerid');
+                if (resultLayer) view.map.remove(resultLayer);
 
-            const [TileLayer] = await loadModules(
-                ['esri/layers/TileLayer'],
-                options
-            );
-            const layer = new TileLayer({ 
-              url: data.layerurl,
-              id: data.layerid
-            })
-            view.map.add(layer);
+                //处理不同服务类型
+                const [TileLayer, FeatureLayer] = await loadModules(
+                    ['esri/layers/TileLayer', 'esri/layers/FeatureLayer'],
+                    options,
+                );
+                const c = data.layerurl.split('/');
+                const serverType = c[c.length - 1];
+                let layer = '';
+                switch (serverType) {
+                    case 'MapServer':
+                        layer = new TileLayer({ url: data.layerurl, id: data.layerid });
+                        break;
+                    case 'FeatureServer':
+                        layer = new FeatureLayer({ url: data.layerurl, id: data.layerid });
+                        break;
+                    default:
+                        break;
+                }
+                view.map.add(layer);
         }
-      }
+      },
+      closeMapTreePannel() {
+        const currentVisible = this.$store.getters._getDefaultMapTreeVisible;
+        this.$store.commit('_setDefaultMapTreeVisible', !currentVisible);
+      },
     }
-  }
+}
 </script>
   
 <style>
@@ -138,5 +150,23 @@ export default {
     background-color: #E9E9EB;
     opacity: 0.75;
   }
+  .maptree-header {
+    width: 100%;
+    height: 35px;
+    border-bottom: 1px solid #e4e7ed;
+    padding: 0 5px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+}
+.maptree-header > span {
+    line-height: 35px;
+    font-size: 16px;
+    font-weight: 600;
+}
+.maptree-header > i {
+    line-height: 35px;
+    cursor: pointer;
+}
 </style>
   

@@ -1,7 +1,12 @@
 <template>
   <div id="app">
     <el-container class="app-out-pannel">
-      <el-header class="sys-header">WebGIS地图展示系统</el-header>
+      <el-header class="sys-header">
+        <el-col :span="6" class='logo-container'>
+          <img src="./assets/logo_satellite.png" class='logo' alt="">
+          <span class='title'>  WebGIS 地图展示系统</span>
+        </el-col>
+      </el-header>
       <el-container class="app-content-pannel">
         <el-menu
       default-active="2"
@@ -95,6 +100,23 @@ body,
   font-weight: 600;
   display: flex;
   justify-content: space-between;
+}
+.logo-container {
+  line-height: 60px;
+  min-width: 400px;
+}
+.logo {
+  height: 50px;
+  width: 50px;
+  margin-right: 5px;
+  vertical-align: middle;
+  display: inline-block;
+}
+.title {
+  vertical-align: middle;
+  font-size: 22px;
+  font-family: "Microsoft YaHei";
+  letter-spacing: 2px;
 }
 
 .sys-content {
