@@ -4,11 +4,7 @@
   
 <script>
 import { loadModules } from 'esri-loader';
-
-const options = {
-    url: 'https://js.arcgis.com/4.25/init.js',
-    css: 'https://js.arcgis.com/4.25/esri/themes/light/main.css',
-}
+import config from './../config';
 
 export default {
     name: 'MapView',
@@ -28,7 +24,7 @@ export default {
                     'esri/widgets/BasemapToggle', 
                     'esri/widgets/ScaleBar'
                 ],
-                options
+                config.options
             );
 
             // create a basemap from a dynamic mapserver

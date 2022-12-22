@@ -8,9 +8,9 @@
         <el-button id="clear" type="info" class="maptools-item" size="medium" @click="handleMapToolsItemClick">清屏</el-button>
       </el-button-group>
     </div>
-  </template>
+</template>
   
-  <script>
+<script>
   export default {
     name: 'MapTools',
     methods: {
@@ -23,9 +23,10 @@
         }
         switch(target.id) {
           case 'xzqh':
+            this.openXZQHPannel();
             break;
           case 'maptree':
-            this.open();
+            this.openMapTreePannel();
             break;
           case 'distance':
             break;
@@ -37,15 +38,19 @@
             break;
         }
       },
-      open(){
+      openXZQHPannel() {
+        let currentVisible = this.$store.getters._getDefaultXZQHVisible;
+        this.$store.commit('_setDefaultXZQHVisible', !currentVisible);
+        },
+      openMapTreePannel(){
         let currentVisible = this.$store.getters._getDefaultMapTreeVisible;
         this.$store.commit('_setDefaultMapTreeVisible', !currentVisible);
       }
     }
   }
-  </script>
+</script>
   
-  <style>
+<style>
   .maptools-view{
     position: absolute;
     width: 460px;
@@ -56,5 +61,5 @@
   .maptools-item{
     cursor: pointer;
   }
-  </style>
+</style>
   
