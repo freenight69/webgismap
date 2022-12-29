@@ -20,7 +20,7 @@
         <div class="XZQH-content-pannel">
             <tbody>
                 <tr v-for="item in cityAndCountyOptions" :key="item.label">
-                    <td style="min-width: 50px">
+                    <td style="min-width: 50px; vertical-align: text-top">
                         <span class="city-item" :value="item.value" @click="handleItemClick(item.value, 'city')">
                             {{ item.label }}
                         </span>
@@ -218,7 +218,7 @@ export default {
 .XZQHComponent-pannel {
     position: absolute;
     top: 15px;
-    left: 60px;
+    left: 30px;
     width: 400px;
     height: 600px;
     background-color: #E9E9EB;

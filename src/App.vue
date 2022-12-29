@@ -12,38 +12,42 @@
       default-active="2"
       class="el-menu-vertical-demo"
       @select="handleMenuSelect"
-      :unique-opened="true"
-      background-color="#545c64"
-      text-color="#fff"
-      active-text-color="#ffd04b">
+      :unique-opened="false"
+      text-color="#444A51">
       <el-menu-item index="1">
         <i class="el-icon-monitor"></i>
         <span slot="title">首页</span>
       </el-menu-item>
       <el-menu-item index="2">
-        <i class="el-icon-s-home"></i>
-        <span slot="title">地图门户</span>
+        <i class="el-icon-cloudy"></i>
+        <span slot="title">气象预报</span>
       </el-menu-item>
-      <el-submenu index="3">
+      <el-menu-item index="3">
+        <i class="el-icon-map-location"></i>
+        <span slot="title">地图功能</span>
+      </el-menu-item>
+      <el-submenu index="4">
         <template slot="title">
           <i class="el-icon-menu"></i>
-          <span>地图功能</span>
+          <span>分析功能</span>
         </template>
-        <el-submenu index="3-1">
-          <template slot="title">测量功能</template>
-          <el-menu-item index="3-1-1">距离测量</el-menu-item>
-          <el-menu-item index="3-1-1">面积测量</el-menu-item>
+        <el-submenu index="4-1">
+          <template slot="title">长势监测</template>
+          <el-menu-item index="4-1-1">卫星遥感</el-menu-item>
+          <el-menu-item index="4-1-2">无人机遥感</el-menu-item>
         </el-submenu>
-        <el-submenu index="3-2">
-          <template slot="title">功能2</template>
-          <el-menu-item index="3-2-1">功能2-1</el-menu-item>
+        <el-submenu index="4-2">
+          <template slot="title">环境监测</template>
+          <el-menu-item index="4-2-1">土壤湿度</el-menu-item>
         </el-submenu>
-        <el-submenu index="3-3">
-          <template slot="title">功能3</template>
-          <el-menu-item index="3-3-1">功能3-1</el-menu-item>
+        <el-submenu index="4-3">
+          <template slot="title">作物分析</template>
+          <el-menu-item index="4-3-1">作物模型</el-menu-item>
+          <el-menu-item index="4-3-2">出苗分析</el-menu-item>
+          <el-menu-item index="4-3-3">测产分析</el-menu-item>
         </el-submenu>
       </el-submenu>
-      <el-menu-item index="4" disabled>
+      <el-menu-item index="5" disabled>
         <i class="el-icon-setting"></i>
         <span slot="title">设置</span>
       </el-menu-item>
@@ -70,6 +74,9 @@ export default {
         this.$router.push('/')
       }else if(index === '2'){
         // 跳转到一张图
+        this.$router.push('/weatherforcast')
+      }else if(index === '3'){
+        // 跳转到一张图
         this.$router.push('/onemap')
       }
     }
@@ -93,9 +100,9 @@ body,
 }
 
 .sys-header {
-  background-color: #444A51;
+  background-color: #F9F9F9;
   line-height: 60px;
-  color: #fff;
+  color: #444A51;
   font-size: 20px;
   font-weight: 600;
   display: flex;

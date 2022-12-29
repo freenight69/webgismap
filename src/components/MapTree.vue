@@ -69,14 +69,14 @@ export default {
                     label: '地块数据',
                     children: [
                         {
-                            label: '火车站数据 84',
+                            label: '进水闸门',
                             layerid: 'layerid',
-                            layerurl: 'https://services3.arcgis.com/U26uBjSD32d7xvm2/arcgis/rest/services/trainstationdata/FeatureServer',
+                            layerurl: 'https://services7.arcgis.com/rfJQF2MONqIFMBhn/arcgis/rest/services/inlet_mercator/FeatureServer',
                         },
                         {
-                            label: '火车站数据 Mekatuo',
+                            label: '出水闸门',
                             layerid: 'layerid',
-                            layerurl: 'https://services3.arcgis.com/U26uBjSD32d7xvm2/arcgis/rest/services/trainstation_WebMokatuo/FeatureServer',
+                            layerurl: 'https://services7.arcgis.com/rfJQF2MONqIFMBhn/arcgis/rest/services/outlet_mercator/FeatureServer',
                         },
                         {
                             label: '卷帘分析 top',
@@ -137,16 +137,16 @@ export default {
 </script>
   
 <style>
-  .maptree-pannel{
+.maptree-pannel{
     position: absolute;
     width: 225px;
     height: 300px;
     top: 15px;
-    left: 60px;
+    left: 30px;
     background-color: #E9E9EB;
     opacity: 0.75;
-  }
-  .maptree-header {
+}
+.maptree-header {
     width: 100%;
     height: 35px;
     border-bottom: 1px solid #e4e7ed;
