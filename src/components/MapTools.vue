@@ -350,15 +350,14 @@ export default {
                         //实例化表格数据
                         results.features.map((item, index) => {
                             currentData.push({
-                                name: item.attributes.name,
-                                type: item.attributes.type,
-                                tieluju: item.attributes.tieluju,
-                                address: item.attributes.address,
-                                lon: item.attributes.lon,
-                                lat: item.attributes.lat,
+                                name: item.attributes.Name,
+                                lon: Math.floor(item.attributes.Lon * 1000000) / 1000000,
+                                lat: Math.floor(item.attributes.Lat * 1000000) / 1000000,
+                                state: item.attributes.State,
                                 key: index,
                             });
                         });
+                        console.log(currentData);
                     } else {
                         currentData.length = 0;
                     }
@@ -384,7 +383,7 @@ export default {
             const resultData = this._translateLonLat(resultFeatures);
             //实例化弹窗
             let template = {
-                title: '{name}-{tieluju}',
+                title: '{name}',
                 content: [
                     {
                         type: 'fields',
@@ -394,16 +393,16 @@ export default {
                                 label: '名称',
                             },
                             {
-                                fieldName: 'type',
-                                label: '类型',
+                                fieldName: 'lon',
+                                label: '经度',
                             },
                             {
-                                fieldName: 'tieluju',
-                                label: '铁路局',
+                                fieldName: 'lat',
+                                label: '纬度',
                             },
                             {
-                                fieldName: 'address',
-                                label: '地址',
+                                fieldName: 'state',
+                                label: '状态',
                             },
                         ],
                     },
@@ -417,7 +416,7 @@ export default {
                     type: 'simple', // autocasts as new SimpleRenderer()
                     symbol: {
                         type: 'picture-marker', // autocasts as new PictureMarkerSymbol()
-                        url: `static/icon/train.png`,
+                        url: 'static/icon/valve.ico',
                         width: '32px',
                         height: '32px',
                     },
@@ -432,15 +431,15 @@ export default {
                         type: 'string',
                     },
                     {
-                        name: 'type',
-                        type: 'string',
+                        name: 'lon',
+                        type: 'double',
                     },
                     {
-                        name: 'tieluju',
-                        type: 'string',
+                        name: 'lat',
+                        type: 'double',
                     },
                     {
-                        name: 'address',
+                        name: 'state',
                         type: 'string',
                     },
                 ],
@@ -457,15 +456,15 @@ export default {
                     _self.geoData.push({
                         geometry: {
                             type: 'point',
-                            x: Number(value.attributes.lon),
-                            y: Number(value.attributes.lat),
+                            x: Number(value.attributes.Lon),
+                            y: Number(value.attributes.Lat),
                         },
                         attributes: {
                             ObjectID: key + 1,
-                            name: value.attributes.name,
-                            type: value.attributes.type,
-                            tieluju: value.attributes.tieluju,
-                            address: value.attributes.address,
+                            name: value.attributes.Name,
+                            lon: value.attributes.Lon,
+                            lat: value.attributes.Lat,
+                            state: value.attributes.State,
                         },
                     });
                 });
@@ -596,7 +595,7 @@ export default {
     margin-left: 0;
 }
 .dropdown-menu{
-    background-color: #E9E9EB;
+    background-color: #fff;
     opacity: 0.75;
 }
 </style>

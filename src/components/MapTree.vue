@@ -8,7 +8,6 @@
         :data="data" 
         :props="defaultProps" 
         accordion 
-        style="background-color: #E9E9EB" 
         @node-click="handleNodeClick">
       </el-tree>
     </div>
@@ -79,6 +78,11 @@ export default {
                             layerurl: 'https://services7.arcgis.com/rfJQF2MONqIFMBhn/arcgis/rest/services/outlet_mercator/FeatureServer',
                         },
                         {
+                            label: '进排水口',
+                            layerid: 'layerid',
+                            layerurl: 'https://services7.arcgis.com/rfJQF2MONqIFMBhn/arcgis/rest/services/drain_mercator/FeatureServer',
+                        },
+                        {
                             label: '卷帘分析 top',
                             layerid: 'swipeLayerTop',
                             layerurl: 'https://services3.arcgis.com/U26uBjSD32d7xvm2/arcgis/rest/services/XZQHProvince_WebMokatuo/FeatureServer',
@@ -100,7 +104,7 @@ export default {
     mounted: function () {},
     methods: {
         async handleNodeClick(data) {
-          console.log(data.layerurl);
+        //   console.log(data.layerurl);
           if(data.layerurl) {
             //删除已添加的图层
             const view = this.$store.getters._getDefaultMapView;
@@ -115,12 +119,69 @@ export default {
                 const c = data.layerurl.split('/');
                 const serverType = c[c.length - 1];
                 let layer = '';
+                let results = '';
                 switch (serverType) {
                     case 'MapServer':
                         layer = new TileLayer({ url: data.layerurl, id: data.layerid });
                         break;
                     case 'FeatureServer':
                         layer = new FeatureLayer({ url: data.layerurl, id: data.layerid });
+                        results = await layer.queryFeatures();
+                        // console.log(results.features);
+                        // 跳转到查询features的中心点
+                        if (results.features[0].geometry.type == "point") {
+                            // 初始化最大最小经纬度                         
+                            var minLonPoint = results.features[0].geometry.longitude;
+                            var maxLonPoint = results.features[0].geometry.longitude;
+                            var minLatPoint = results.features[0].geometry.latitude;
+                            var maxLatPoint = results.features[0].geometry.latitude;
+                            for (var i=0; i<results.features.length; i++) {
+                                if (maxLonPoint < results.features[i].geometry.longitude) {
+                                    maxLonPoint = results.features[i].geometry.longitude;
+                                }
+                                if (minLonPoint > results.features[i].geometry.longitude) {
+                                    minLonPoint = results.features[i].geometry.longitude;
+                                }
+                                if (maxLatPoint < results.features[i].geometry.latitude) {
+                                    maxLatPoint = results.features[i].geometry.latitude;
+                                }
+                                if (minLatPoint > results.features[i].geometry.latitude) {
+                                    minLatPoint = results.features[i].geometry.latitude;
+                                }
+                            }
+                            var zoomLonPoint = (maxLonPoint + minLonPoint)/2;
+                            var zoomLatPoint = (maxLatPoint + minLatPoint)/2;
+                            view.goTo({
+                                center: [zoomLonPoint, zoomLatPoint],
+                                zoom: 15,
+                            });
+                        }else if (results.features[0].geometry.type == "polygon") {
+                            // 初始化最大最小经纬度                         
+                            var minLonPolygon = results.features[0].geometry.extent.xmin;
+                            var maxLonPolygon = results.features[0].geometry.extent.xmax;
+                            var minLatPolygon = results.features[0].geometry.extent.ymin;
+                            var maxLatPolygon = results.features[0].geometry.extent.ymax;
+                            for (var k=0; k<results.features.length; k++) {
+                                if (maxLonPolygon < results.features[k].geometry.extent.xmax) {
+                                    maxLonPolygon = results.features[k].geometry.extent.xmax;
+                                }
+                                if (minLonPolygon > results.features[k].geometry.extent.xmin) {
+                                    minLonPolygon = results.features[k].geometry.extent.xmin;
+                                }
+                                if (maxLatPolygon < results.features[k].geometry.extent.ymax) {
+                                    maxLatPolygon = results.features[k].geometry.extent.ymax;
+                                }
+                                if (minLatPolygon > results.features[k].geometry.extent.ymin) {
+                                    minLatPolygon = results.features[k].geometry.extent.ymin;
+                                }
+                            }
+                            var zoomLonPolygon = (maxLonPolygon + minLonPolygon)/2;
+                            var zoomLatPolygon = (maxLatPolygon + minLatPolygon)/2;
+                            view.goTo({
+                                center: [zoomLonPolygon, zoomLatPolygon],
+                                zoom: 4,
+                            });
+                        }
                         break;
                     default:
                         break;
@@ -143,7 +204,7 @@ export default {
     height: 300px;
     top: 15px;
     left: 30px;
-    background-color: #E9E9EB;
+    background-color: #fff;
     opacity: 0.75;
 }
 .maptree-header {

@@ -9,7 +9,6 @@
       </el-header>
       <el-container class="app-content-pannel">
         <el-menu
-      default-active="2"
       class="el-menu-vertical-demo"
       @select="handleMenuSelect"
       :unique-opened="false"
@@ -19,7 +18,7 @@
         <span slot="title">首页</span>
       </el-menu-item>
       <el-menu-item index="2">
-        <i class="el-icon-cloudy"></i>
+        <i class="el-icon-sunrise-1"></i>
         <span slot="title">气象预报</span>
       </el-menu-item>
       <el-menu-item index="3">

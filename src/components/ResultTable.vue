@@ -7,10 +7,10 @@
         <div class="result-table-content">
             <el-table :data="this.$store.getters._getDefaultQueryResult" height="250" style="width: 100%">
                 <el-table-column prop="key" label="序号"> </el-table-column>
-                <el-table-column prop="name" label="站名"> </el-table-column>
-                <el-table-column prop="type" label="类型"> </el-table-column>
-                <el-table-column prop="tieluju" label="铁路局"> </el-table-column>
-                <el-table-column prop="address" label="地址"> </el-table-column>
+                <el-table-column prop="name" label="名称"> </el-table-column>
+                <el-table-column prop="lon" label="经度"> </el-table-column>
+                <el-table-column prop="lat" label="纬度"> </el-table-column>
+                <el-table-column prop="state" label="状态"> </el-table-column>
             </el-table>
         </div>
     </div>
@@ -33,10 +33,10 @@ export default {
     position: absolute;
     padding: 0 15px;
     height: 300px;
-    width: 600px;
-    bottom: 15px;
+    width: 575px;
+    bottom: 40px;
     left: 15px;
-    background-color: #E9E9EB;
+    background-color: #fff;
     opacity: 0.75;
 }
 .result-table-header {
