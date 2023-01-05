@@ -34,8 +34,8 @@ export default {
             const mapView01 = new MapView({
                 container: 'top-left',
                 map: map01,
-                zoom: 10,
-                center: [104.072745, 30.663774],
+                zoom: 9,
+                center: [121.568735,31.123845],
             });
 
             const map02 = new Map({
@@ -44,8 +44,8 @@ export default {
             const mapView02 = new MapView({
                 container: 'top-right',
                 map: map02,
-                zoom: 10,
-                center: [104.072745, 30.663774],
+                zoom: 9,
+                center: [121.568735,31.123845],
             });
 
             const map03 = new Map({
@@ -54,8 +54,8 @@ export default {
             const mapView03 = new MapView({
                 container: 'buttom-left',
                 map: map03,
-                zoom: 10,
-                center: [104.072745, 30.663774],
+                zoom: 9,
+                center: [121.568735,31.123845],
             });
 
             const map04 = new Map({
@@ -64,8 +64,8 @@ export default {
             const mapView04 = new MapView({
                 container: 'buttom-right',
                 map: map04,
-                zoom: 10,
-                center: [104.072745, 30.663774],
+                zoom: 9,
+                center: [121.568735,31.123845],
             });
 
             mapView01.ui.components = [];

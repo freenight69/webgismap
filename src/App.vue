@@ -11,7 +11,7 @@
         <el-menu
       class="el-menu-vertical-demo"
       @select="handleMenuSelect"
-      :unique-opened="false"
+      :unique-opened="true"
       text-color="#444A51">
       <el-menu-item index="1">
         <i class="el-icon-monitor"></i>
@@ -21,10 +21,14 @@
         <i class="el-icon-sunrise-1"></i>
         <span slot="title">气象预报</span>
       </el-menu-item>
-      <el-menu-item index="3">
-        <i class="el-icon-map-location"></i>
-        <span slot="title">地图功能</span>
-      </el-menu-item>
+      <el-submenu index="3">
+        <template slot="title">
+          <i class="el-icon-map-location"></i>
+          <span>地图功能</span>
+        </template>
+        <el-menu-item index="3-1">图层管理</el-menu-item>
+        <el-menu-item index="3-2">多屏对比</el-menu-item>
+      </el-submenu>
       <el-submenu index="4">
         <template slot="title">
           <i class="el-icon-menu"></i>
@@ -74,9 +78,12 @@ export default {
       }else if(index === '2'){
         // 跳转到一张图
         this.$router.push('/weatherforcast')
-      }else if(index === '3'){
+      }else if(index === '3-1'){
         // 跳转到一张图
         this.$router.push('/onemap')
+      }else if(index == '3-2'){
+        // 跳转到多屏对比
+        this.$router.push('/onemap/one')
       }
     }
   }

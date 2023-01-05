@@ -376,6 +376,7 @@ export default {
         async renderResultLayer(resultFeatures) {
             const view = this.$store.getters._getDefaultMapView;
             const [FeatureLayer] = await loadModules(['esri/layers/FeatureLayer'], config.options);
+            // const [Graphic] = await loadModules(['esri/Graphic'], config.options);
 
             const resultLayer = view.map.findLayerById('initResultLayer');
             if (resultLayer) view.map.remove(resultLayer);
@@ -446,6 +447,21 @@ export default {
                 popupTemplate: template,
             });
             view.map.add(queryResultLayer);
+            // const fillSymbol = {
+            //     type: 'simple-fill',
+            //     color: [188, 240, 234, 0.1],
+            //     outline: {
+            //         color: '#00FFFF',
+            //         width: 2,
+            //     },
+            // };
+
+            // const graphic = new Graphic({
+            //     geometry: resultData.geometry,
+            //     symbol: fillSymbol,
+            //     popupTemplate: template,
+            // });
+            // view.graphics.add(graphic);
         },
         //处理经纬度数据，返回features
         _translateLonLat(data) {
