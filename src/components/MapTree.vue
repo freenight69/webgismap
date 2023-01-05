@@ -118,14 +118,53 @@ export default {
                 );
                 const c = data.layerurl.split('/');
                 const serverType = c[c.length - 1];
+                let template = '';
                 let layer = '';
                 let results = '';
                 switch (serverType) {
                     case 'MapServer':
-                        layer = new TileLayer({ url: data.layerurl, id: data.layerid });
+                        layer = new TileLayer({
+                            url: data.layerurl,
+                            id: data.layerid,
+                            
+                        });
                         break;
                     case 'FeatureServer':
-                        layer = new FeatureLayer({ url: data.layerurl, id: data.layerid });
+                        template = {
+                            // autocasts as new PopupTemplate()
+                            title: "{Name}",
+                            content: [
+                                {
+                                // It is also possible to set the fieldInfos outside of the content
+                                // directly in the popupTemplate. If no fieldInfos is specifically set
+                                // in the content, it defaults to whatever may be set within the popupTemplate.
+                                type: "fields",
+                                fieldInfos: [
+                                    {
+                                    fieldName: "Name",
+                                    label: "名称"
+                                    },
+                                    {
+                                    fieldName: "Lon",
+                                    label: "经度",
+                                    },
+                                    {
+                                    fieldName: "Lat",
+                                    label: "纬度",
+                                    },
+                                    {
+                                    fieldName: "State",
+                                    label: "状态",
+                                    }
+                                ]
+                                }
+                            ]
+                        };
+                        layer = new FeatureLayer({
+                            url: data.layerurl,
+                            id: data.layerid,
+                            popupTemplate: template
+                        });
                         results = await layer.queryFeatures();
                         // console.log(results.features);
                         // 跳转到查询features的中心点

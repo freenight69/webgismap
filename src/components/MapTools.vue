@@ -82,7 +82,7 @@ export default {
             });
         },
         handleMapToolsItemClick(e) {
-            console.log(e.target.id);
+            // console.log(e.target.id);
             // 点击到button上的span时，转换到button
             let target = e.target;
             if(e.target.nodeName == "SPAN"){
@@ -307,7 +307,7 @@ export default {
             });
             view.map.add(_self.graphicsLayer);
 
-            _self.sketchViewModel.create('polygon');
+            await _self.sketchViewModel.create('polygon');
 
             _self.sketchViewModel.on('create-complete', function (event) {
                 const graphic = new Graphic({
@@ -357,7 +357,7 @@ export default {
                                 key: index,
                             });
                         });
-                        console.log(currentData);
+                        // console.log(currentData);
                     } else {
                         currentData.length = 0;
                     }
